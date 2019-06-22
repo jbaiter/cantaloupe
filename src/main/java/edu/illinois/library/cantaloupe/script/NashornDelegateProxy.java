@@ -2,45 +2,26 @@ package edu.illinois.library.cantaloupe.script;
 
 import edu.illinois.library.cantaloupe.resource.RequestContext;
 import edu.illinois.library.cantaloupe.util.Stopwatch;
-import org.graalvm.polyglot.proxy.ProxyObject;
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.script.ScriptException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class GraalJsDelegateProxy extends DelegateProxy {
+public class NashornDelegateProxy extends DelegateProxy {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(JRubyDelegateProxy.class);
+            LoggerFactory.getLogger(NashornDelegateProxy.class);
 
-
-    public GraalJsDelegateProxy(RequestContext requestContext) {
+    public NashornDelegateProxy(RequestContext requestContext) {
         super(requestContext);
     }
 
     @Override
     public String getMethodName(DelegateMethod method) {
         return JavaScriptMethodMapping.METHOD_NAMES.get(method);
-    }
-
-    @Override
-    protected void setRequestContext(RequestContext context) throws ScriptException {
-        invokeUncached(DelegateMethod.REQUEST_CONTEXT_SETTER,
-                ProxyObject.fromMap(Collections.unmodifiableMap(context.toMap())));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Map<String, Long>> getRedactions() throws ScriptException {
-        Object result = invoke(DelegateMethod.REDACTIONS);
-        if (result != null) {
-            Map<Integer, Map<String, Long>> map = (Map<Integer, Map<String, Long>>) result;
-            return new ArrayList<>(map.values());
-        }
-        return Collections.emptyList();
     }
 
     @Override
@@ -58,5 +39,19 @@ public class GraalJsDelegateProxy extends DelegateProxy {
         } finally {
             lock.unlock(stamp);
         }
+    }
+
+    /**
+     * @return Return value of {@link DelegateMethod#REDACTIONS}, or an empty
+     *         list if it returned {@literal nil}.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Map<String,Long>> getRedactions() throws ScriptException {
+        Object result = invoke(DelegateMethod.REDACTIONS);
+        if (result != null) {
+            ScriptObjectMirror sobj = (ScriptObjectMirror) result;
+            return Collections.unmodifiableList(sobj.to(List.class));
+        }
+        return Collections.emptyList();
     }
 }

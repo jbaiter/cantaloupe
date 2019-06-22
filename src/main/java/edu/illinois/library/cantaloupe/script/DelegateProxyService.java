@@ -78,9 +78,11 @@ public final class DelegateProxyService {
                         JRubyDelegateProxy.load(code);
                     } else if (typeName.equals("graal.js")) {
                         GraalJsDelegateProxy.load(code);
+                    } else if (typeName.equals("nashorn")) {
+                        NashornDelegateProxy.load(code);
                     } else {
                         throw new RuntimeException(
-                            "Unsupported delegate script type, must be 'jruby' or 'graaljs', was " + typeName);
+                            "Unsupported delegate script type, must be 'jruby', 'graaljs' or 'nashorn', was " + typeName);
                     }
                     isCodeLoaded = true;
                 }
@@ -154,6 +156,8 @@ public final class DelegateProxyService {
                 return new JRubyDelegateProxy(context);
             } else if (typeName.equals("graal.js")) {
                 return new GraalJsDelegateProxy(context);
+            } else if (typeName.equals("nashorn")) {
+                return new NashornDelegateProxy(context);
             } else {
                 throw new RuntimeException(
                     "Unsupported delegate script type, must be 'jruby' or 'graal.js'");
