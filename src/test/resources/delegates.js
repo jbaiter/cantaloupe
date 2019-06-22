@@ -141,7 +141,7 @@ class CustomDelegate {
         };
       case 'https-jpg-rgb-64x56x8-plane.jpg':
         return {
-          'uri': 'https://example.org/bla/' + URI.escape(identifier),
+          'uri': 'https://example.org/bla/' + encodeURIComponent(identifier),
           'username': 'username',
           'secret': 'secret',
           'headers': {

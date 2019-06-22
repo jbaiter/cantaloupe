@@ -24,15 +24,15 @@ import static edu.illinois.library.cantaloupe.test.PerformanceTestConstants.*;
              time = MEASUREMENT_TIME)
 @State(Scope.Benchmark)
 @Fork(value = 1, jvmArgs = { "-server", "-Xms128M", "-Xmx128M", "-Dcantaloupe.config=memory" })
-public class JRubyDelegatePerformance {
+public class JythonDelegatePerformance {
     private DelegateProxy proxy;
 
     @Setup
     public void setUp() throws DisabledException {
         Configuration config = Configuration.getInstance();
         config.setProperty(Key.DELEGATE_SCRIPT_ENABLED, true);
-        config.setProperty(Key.DELEGATE_SCRIPT_ENGINE, "jruby");
-        Path scriptFile = TestUtil.getFixture("delegates.rb");
+        config.setProperty(Key.DELEGATE_SCRIPT_ENGINE, "jython");
+        Path scriptFile = TestUtil.getFixture("delegates.py");
         config.setProperty(
                 Key.DELEGATE_SCRIPT_PATHNAME,
                 scriptFile.toAbsolutePath().toString());
