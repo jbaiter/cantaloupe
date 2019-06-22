@@ -43,6 +43,11 @@ public final class DelegateProxyService {
         return config.getBoolean(Key.DELEGATE_SCRIPT_ENABLED, false);
     }
 
+    public static String getTypeName() {
+        Configuration config = Configuration.getInstance();
+        return config.getString(Key.DELEGATE_SCRIPT_ENGINE, "jruby");
+    }
+
     /**
      * For testing only!
      */
@@ -52,8 +57,9 @@ public final class DelegateProxyService {
 
     /**
      * Returns the shared instance. If the instance is being created, the
-     * delegate script code will be {@link DelegateProxy#load(String) loaded}
-     * into it from the result of {@link #getScriptFile()}.
+     * delegate script code will be ({@link JRubyDelegateProxy#load(String),
+     * {@link GraalJsDelegateProxy#load(String)} loaded} into it from the
+     * result of {@link #getScriptFile()}.
      *
      * @return Shared instance.
      */
@@ -63,11 +69,19 @@ public final class DelegateProxyService {
         }
         if (Configuration.getInstance().getBoolean(Key.DELEGATE_SCRIPT_ENABLED, false) &&
                 !isCodeLoaded) {
+            String typeName = getTypeName();
             try {
                 Path file = getScriptFile();
                 if (file != null) {
                     String code = Files.readString(file);
-                    DelegateProxy.load(code);
+                    if (typeName.equals("jruby")) {
+                        JRubyDelegateProxy.load(code);
+                    } else if (typeName.equals("graal.js")) {
+                        GraalJsDelegateProxy.load(code);
+                    } else {
+                        throw new RuntimeException(
+                            "Unsupported delegate script type, must be 'jruby' or 'graaljs', was " + typeName);
+                    }
                     isCodeLoaded = true;
                 }
             } catch (IOException | ScriptException e) {
@@ -135,7 +149,15 @@ public final class DelegateProxyService {
     public DelegateProxy newDelegateProxy(RequestContext context)
             throws DisabledException {
         if (isEnabled()) {
-            return new DelegateProxy(context);
+            String typeName = getTypeName();
+            if (typeName.equals("jruby")){
+                return new JRubyDelegateProxy(context);
+            } else if (typeName.equals("graal.js")) {
+                return new GraalJsDelegateProxy(context);
+            } else {
+                throw new RuntimeException(
+                    "Unsupported delegate script type, must be 'jruby' or 'graal.js'");
+            }
         } else {
             throw new DisabledException();
         }

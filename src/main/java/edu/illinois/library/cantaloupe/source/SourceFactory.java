@@ -6,6 +6,7 @@ import edu.illinois.library.cantaloupe.config.Key;
 import edu.illinois.library.cantaloupe.image.Identifier;
 import edu.illinois.library.cantaloupe.script.DelegateMethod;
 import edu.illinois.library.cantaloupe.script.DelegateProxy;
+import edu.illinois.library.cantaloupe.script.JRubyDelegateProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,15 +85,15 @@ public final class SourceFactory {
             case DELEGATE_SCRIPT:
                 if (proxy == null) {
                     throw new IllegalArgumentException("The " +
-                            DelegateProxy.class.getSimpleName() +
-                            " argument must be non-null when using " +
-                            getSelectionStrategy() + ".");
+                                                       JRubyDelegateProxy.class.getSimpleName() +
+                                                       " argument must be non-null when using " +
+                                                       getSelectionStrategy() + ".");
                 }
                 Source source = newDynamicSource(identifier, proxy);
                 LOGGER.info("{}() returned a {} for {}",
-                        DelegateMethod.SOURCE,
-                        source.getClass().getSimpleName(),
-                        identifier);
+                            proxy.getMethodName(DelegateMethod.SOURCE),
+                            source.getClass().getSimpleName(),
+                            identifier);
                 return source;
             default:
                 final Configuration config = Configuration.getInstance();

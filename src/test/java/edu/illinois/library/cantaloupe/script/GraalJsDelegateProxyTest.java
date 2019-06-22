@@ -7,6 +7,7 @@ import edu.illinois.library.cantaloupe.test.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.script.ScriptEngineManager;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DelegateProxyTest extends BaseTest {
+public class GraalJsDelegateProxyTest extends BaseTest {
 
     private DelegateProxy instance;
 
@@ -22,18 +23,20 @@ public class DelegateProxyTest extends BaseTest {
     public void setUp() throws Exception {
         super.setUp();
 
+        DelegateProxy.scriptEngine = new ScriptEngineManager()
+                .getEngineByName("graal.js");
+
         RequestContext context = new RequestContext();
         context.setIdentifier(new Identifier("cats"));
 
-        Path scriptFile = TestUtil.getFixture("delegates.rb");
+        Path scriptFile = TestUtil.getFixture("delegates.js");
         String code = Files.readString(scriptFile);
-        DelegateProxy.load(code);
+        GraalJsDelegateProxy.load(code);
 
-        instance = new DelegateProxy(context);
+        instance = new GraalJsDelegateProxy(context);
     }
 
     /* authorize() */
-
     @Test
     void testAuthorizeReturningTrue() throws Exception {
         RequestContext context = new RequestContext();
@@ -61,7 +64,7 @@ public class DelegateProxyTest extends BaseTest {
         @SuppressWarnings("unchecked")
         Map<String,Object> result = (Map<String,Object>) instance.authorize();
         assertEquals("http://example.org/", result.get("location"));
-        assertEquals(303, (long) result.get("status_code"));
+        assertEquals(303, result.get("status_code"));
     }
 
     /* getAzureStorageSourceBlobKey() */

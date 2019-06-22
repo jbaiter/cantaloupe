@@ -60,7 +60,7 @@ final class ScriptWatcher implements Runnable {
                         LOGGER.debug("Script checksums differ; reloading");
                         currentChecksum = newChecksum;
                         final String code = new String(fileBytes, "UTF-8");
-                        DelegateProxy.load(code);
+                        JRubyDelegateProxy.load(code);
                     } else {
                         LOGGER.debug("Script checksums match; skipping reload");
                     }

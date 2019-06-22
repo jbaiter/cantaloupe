@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public final class Logger {
 
     private static final org.slf4j.Logger LOGGER =
-            LoggerFactory.getLogger(DelegateProxy.class);
+            LoggerFactory.getLogger(JRubyDelegateProxy.class);
 
     public static void trace(String message) {
         LOGGER.trace(message);

@@ -91,7 +91,6 @@ class CustomDelegate
     identifier = context['identifier']
 
     ########################## DelegateProxyTest ############################
-
     case identifier
       when 'DelegateProxyTest-String'
         return 'http://example.org/foxes'

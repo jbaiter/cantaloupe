@@ -391,8 +391,8 @@ final class S3Source extends AbstractSource implements StreamSource {
                 getDelegateProxy().getS3SourceObjectInfo();
         if (result.isEmpty()) {
             throw new NoSuchFileException(
-                    DelegateMethod.S3SOURCE_OBJECT_INFO +
-                    " returned nil for " + identifier);
+                getDelegateProxy().getMethodName(DelegateMethod.S3SOURCE_OBJECT_INFO) +
+                " returned nil for " + identifier);
         }
 
         if (result.containsKey("bucket") && result.containsKey("key")) {

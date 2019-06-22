@@ -2,24 +2,25 @@ package edu.illinois.library.cantaloupe.auth;
 
 import edu.illinois.library.cantaloupe.script.DelegateProxy;
 
+import edu.illinois.library.cantaloupe.script.JRubyDelegateProxy;
 import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.Map;
 
 /**
- * Authorizes a request using a {@link DelegateProxy}.
+ * Authorizes a request using a {@link JRubyDelegateProxy}.
  */
 final class DelegateAuthorizer implements Authorizer {
 
     private DelegateProxy delegateProxy;
 
     /**
-     * @param args One-element array containing a {@link DelegateProxy}.
+     * @param args One-element array containing a {@link JRubyDelegateProxy}.
      */
     DelegateAuthorizer(Object... args) {
         if (args.length < 1) {
             throw new NullPointerException(
-                    DelegateProxy.class.getSimpleName() + " argument is required");
+                JRubyDelegateProxy.class.getSimpleName() + " argument is required");
         }
         this.delegateProxy = (DelegateProxy) args[0];
     }
