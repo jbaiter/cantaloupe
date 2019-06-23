@@ -3,6 +3,10 @@ package edu.illinois.library.cantaloupe.script;
 import edu.illinois.library.cantaloupe.config.Configuration;
 import edu.illinois.library.cantaloupe.config.Key;
 import edu.illinois.library.cantaloupe.resource.RequestContext;
+import edu.illinois.library.cantaloupe.script.engines.GraalJsDelegateProxy;
+import edu.illinois.library.cantaloupe.script.engines.JRubyDelegateProxy;
+import edu.illinois.library.cantaloupe.script.engines.JythonDelegateProxy;
+import edu.illinois.library.cantaloupe.script.engines.NashornDelegateProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

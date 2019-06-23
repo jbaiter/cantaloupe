@@ -2,7 +2,7 @@ package edu.illinois.library.cantaloupe.auth;
 
 import edu.illinois.library.cantaloupe.script.DelegateProxy;
 
-import edu.illinois.library.cantaloupe.script.JRubyDelegateProxy;
+import edu.illinois.library.cantaloupe.script.engines.JRubyDelegateProxy;
 import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.Map;

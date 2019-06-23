@@ -1,6 +1,7 @@
-package edu.illinois.library.cantaloupe.script;
+package edu.illinois.library.cantaloupe.script.engines;
 
 import com.google.common.collect.ImmutableMap;
+import edu.illinois.library.cantaloupe.script.DelegateMethod;
 
 import java.util.Map;
 

@@ -2,6 +2,7 @@ package edu.illinois.library.cantaloupe.script;
 
 import edu.illinois.library.cantaloupe.image.Identifier;
 import edu.illinois.library.cantaloupe.resource.RequestContext;
+import edu.illinois.library.cantaloupe.script.engines.GraalJsDelegateProxy;
 import edu.illinois.library.cantaloupe.test.TestUtil;
 import org.junit.jupiter.api.BeforeEach;
 

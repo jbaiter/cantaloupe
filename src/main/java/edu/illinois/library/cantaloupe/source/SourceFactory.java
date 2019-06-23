@@ -6,7 +6,7 @@ import edu.illinois.library.cantaloupe.config.Key;
 import edu.illinois.library.cantaloupe.image.Identifier;
 import edu.illinois.library.cantaloupe.script.DelegateMethod;
 import edu.illinois.library.cantaloupe.script.DelegateProxy;
-import edu.illinois.library.cantaloupe.script.JRubyDelegateProxy;
+import edu.illinois.library.cantaloupe.script.engines.JRubyDelegateProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

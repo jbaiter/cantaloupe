@@ -1,5 +1,6 @@
 package edu.illinois.library.cantaloupe.script;
 
+import edu.illinois.library.cantaloupe.script.engines.JRubyDelegateProxy;
 import org.slf4j.LoggerFactory;
 
 /**
