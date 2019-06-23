@@ -306,8 +306,8 @@ final class AzureStorageSource extends AbstractSource implements StreamSource {
         final String key = getDelegateProxy().getAzureStorageSourceBlobKey();
         if (key == null) {
             throw new NoSuchFileException(
-                getDelegateProxy().getMethodName(DelegateMethod.AZURESTORAGESOURCE_BLOB_KEY) +
-                " returned nil for " + identifier);
+                    getDelegateProxy().getMethodName(DelegateMethod.AZURESTORAGESOURCE_BLOB_KEY) +
+                    " returned nil for " + identifier);
         }
         return key;
     }

@@ -84,15 +84,15 @@ public final class SourceFactory {
             case DELEGATE_SCRIPT:
                 if (proxy == null) {
                     throw new IllegalArgumentException("The " +
-                                                       DelegateProxy.class.getSimpleName() +
-                                                       " argument must be non-null when using " +
-                                                       getSelectionStrategy() + ".");
+                            DelegateProxy.class.getSimpleName() +
+                            " argument must be non-null when using " +
+                            getSelectionStrategy() + ".");
                 }
                 Source source = newDynamicSource(identifier, proxy);
                 LOGGER.info("{}() returned a {} for {}",
-                            proxy.getMethodName(DelegateMethod.SOURCE),
-                            source.getClass().getSimpleName(),
-                            identifier);
+                        proxy.getMethodName(DelegateMethod.SOURCE),
+                        source.getClass().getSimpleName(),
+                        identifier);
                 return source;
             default:
                 final Configuration config = Configuration.getInstance();

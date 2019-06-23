@@ -251,8 +251,8 @@ class JdbcSource extends AbstractSource implements StreamSource {
         final String sql = getDelegateProxy().getJdbcSourceLookupSQL();
         if (!sql.contains("?")) {
             throw new IOException(
-                getDelegateProxy().getMethodName(DelegateMethod.JDBCSOURCE_LOOKUP_SQL) +
-                " implementation does not support prepared statements");
+                    getDelegateProxy().getMethodName(DelegateMethod.JDBCSOURCE_LOOKUP_SQL) +
+                    " implementation does not support prepared statements");
         }
         return sql;
     }

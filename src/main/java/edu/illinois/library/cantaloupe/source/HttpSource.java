@@ -28,7 +28,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.time.Duration;
-import java.util.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -569,8 +573,8 @@ class HttpSource extends AbstractSource implements StreamSource {
 
         if (result.isEmpty()) {
             throw new NoSuchFileException(
-                proxy.getMethodName(DelegateMethod.HTTPSOURCE_RESOURCE_INFO) +
-                " returned nil for " + identifier);
+                    proxy.getMethodName(DelegateMethod.HTTPSOURCE_RESOURCE_INFO) +
+                    " returned nil for " + identifier);
         }
 
         final String uri            = (String) result.get("uri");
