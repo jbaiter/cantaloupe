@@ -6,7 +6,6 @@ import edu.illinois.library.cantaloupe.config.Key;
 import edu.illinois.library.cantaloupe.image.Identifier;
 import edu.illinois.library.cantaloupe.script.DelegateMethod;
 import edu.illinois.library.cantaloupe.script.DelegateProxy;
-import edu.illinois.library.cantaloupe.script.engines.JRubyDelegateProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,7 +84,7 @@ public final class SourceFactory {
             case DELEGATE_SCRIPT:
                 if (proxy == null) {
                     throw new IllegalArgumentException("The " +
-                                                       JRubyDelegateProxy.class.getSimpleName() +
+                                                       DelegateProxy.class.getSimpleName() +
                                                        " argument must be non-null when using " +
                                                        getSelectionStrategy() + ".");
                 }

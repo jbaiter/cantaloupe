@@ -61,9 +61,8 @@ public final class DelegateProxyService {
 
     /**
      * Returns the shared instance. If the instance is being created, the
-     * delegate script code will be ({@link JRubyDelegateProxy#load(String),
-     * {@link GraalJsDelegateProxy#load(String)} loaded} into it from the
-     * result of {@link #getScriptFile()}.
+     * delegate script code will be ({@link DelegateProxy#load(String)
+     * loaded} into it from the result of {@link #getScriptFile()}.
      *
      * @return Shared instance.
      */

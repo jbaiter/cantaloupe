@@ -1,6 +1,5 @@
 package edu.illinois.library.cantaloupe.script;
 
-import edu.illinois.library.cantaloupe.script.engines.JRubyDelegateProxy;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public final class Logger {
 
     private static final org.slf4j.Logger LOGGER =
-            LoggerFactory.getLogger(JRubyDelegateProxy.class);
+            LoggerFactory.getLogger(DelegateProxy.class);
 
     public static void trace(String message) {
         LOGGER.trace(message);

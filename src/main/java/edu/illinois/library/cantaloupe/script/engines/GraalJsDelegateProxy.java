@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class GraalJsDelegateProxy extends DelegateProxy {
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(JRubyDelegateProxy.class);
+            LoggerFactory.getLogger(GraalJsDelegateProxy.class);
 
 
     public GraalJsDelegateProxy(RequestContext requestContext) {

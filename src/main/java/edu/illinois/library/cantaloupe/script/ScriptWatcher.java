@@ -2,7 +2,10 @@ package edu.illinois.library.cantaloupe.script;
 
 import edu.illinois.library.cantaloupe.config.Configuration;
 import edu.illinois.library.cantaloupe.config.Key;
+import edu.illinois.library.cantaloupe.script.engines.GraalJsDelegateProxy;
 import edu.illinois.library.cantaloupe.script.engines.JRubyDelegateProxy;
+import edu.illinois.library.cantaloupe.script.engines.JythonDelegateProxy;
+import edu.illinois.library.cantaloupe.script.engines.NashornDelegateProxy;
 import edu.illinois.library.cantaloupe.util.FilesystemWatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,23 @@ final class ScriptWatcher implements Runnable {
             handle(path);
         }
 
+        private void reloadCode(String code) throws ScriptException {
+            String engineName = Configuration.getInstance().getString(Key.DELEGATE_SCRIPT_ENGINE, "jruby");
+            switch (engineName) {
+                case "graal.js":
+                    GraalJsDelegateProxy.load(code);
+                    break;
+                case "nashorn":
+                    NashornDelegateProxy.load(code);
+                    break;
+                case "jython":
+                    JythonDelegateProxy.load(code);
+                    break;
+                default:
+                    JRubyDelegateProxy.load(code);
+            }
+        }
+
         private void handle(Path path) {
             try {
                 if (path.equals(DelegateProxyService.getScriptFile())) {
@@ -61,7 +81,7 @@ final class ScriptWatcher implements Runnable {
                         LOGGER.debug("Script checksums differ; reloading");
                         currentChecksum = newChecksum;
                         final String code = new String(fileBytes, "UTF-8");
-                        JRubyDelegateProxy.load(code);
+                        reloadCode(code);
                     } else {
                         LOGGER.debug("Script checksums match; skipping reload");
                     }
